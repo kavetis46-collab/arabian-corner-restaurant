@@ -87,9 +87,9 @@ function renderCategories() {
         return `
             <button 
                 onclick="filterCategory('${cat.id}')"
-                class="category-tab px-5 py-2.5 rounded-full flex items-center gap-2.5 text-sm font-medium transition-all duration-300 ${isActive ? 'active' : ''}"
+                class="category-tab px-4 py-2 rounded-full flex items-center gap-2 text-xs font-semibold tracking-wide transition-all duration-250 ${isActive ? 'active' : ''}"
                 data-category="${cat.id}">
-                <i class="fa-solid ${cat.icon} text-amber-400"></i>
+                <i class="fa-solid ${cat.icon} text-xs"></i>
                 <span>${cat.name}</span>
             </button>
         `;
@@ -125,11 +125,11 @@ function renderMenu() {
 
     if (filtered.length === 0) {
         container.innerHTML = `
-            <div class="col-span-full py-16 text-center text-slate-400">
-                <i class="fa-solid fa-magnifying-glass text-4xl mb-4 text-amber-500/50"></i>
-                <h3 class="text-xl font-heading text-slate-200">No dishes found</h3>
-                <p class="text-sm mt-2">Try searching for something else or browse another royal category.</p>
-                <button onclick="resetFilters()" class="mt-4 px-6 py-2 btn-outline-gold rounded-full text-sm">View All Dishes</button>
+            <div class="col-span-full py-12 text-center text-zinc-400">
+                <i class="fa-solid fa-magnifying-glass text-3xl mb-3 text-white/40"></i>
+                <h3 class="text-base font-heading font-bold text-white">No dishes found</h3>
+                <p class="text-xs mt-1 text-zinc-400">Try searching for something else or browse another category.</p>
+                <button onclick="resetFilters()" class="mt-3 px-5 py-1.5 btn-outline-white rounded-full text-xs">View All Dishes</button>
             </div>
         `;
         return;
@@ -142,15 +142,15 @@ function renderMenu() {
             : { name: "Regular", price: item.price };
         
         const portionButtons = item.portions && item.portions.length > 1 ? `
-            <div class="mt-3 pt-3 border-t border-slate-800/80">
-                <p class="text-[11px] uppercase tracking-wider text-slate-400 font-semibold mb-2">Select Portion / Serving:</p>
-                <div class="flex flex-wrap gap-1.5">
+            <div class="mt-2.5 pt-2.5 border-t border-neutral-800">
+                <p class="text-[10px] uppercase tracking-wider text-zinc-400 font-semibold mb-1.5">Portion / Serving:</p>
+                <div class="flex flex-wrap gap-1">
                     ${item.portions.map((p, idx) => `
                         <button 
                             type="button"
                             onclick="selectPortion('${item.id}', ${idx})"
-                            class="portion-pill text-xs px-2.5 py-1 rounded-md text-slate-300 transition-all ${idx === selectedPortionIdx ? 'selected' : ''}">
-                            ${p.name} <span class="text-amber-400 font-bold ml-1">${state.currency}${p.price}</span>
+                            class="portion-pill text-[11px] px-2 py-0.5 rounded-md transition-all ${idx === selectedPortionIdx ? 'selected' : ''}">
+                            ${p.name} <span class="font-bold ml-1">${state.currency}${p.price}</span>
                         </button>
                     `).join("")}
                 </div>
@@ -161,7 +161,7 @@ function renderMenu() {
             <div class="food-card flex flex-col justify-between group" data-item-id="${item.id}">
                 <div>
                     <!-- Image Wrapper -->
-                    <div class="food-image-wrapper h-56 w-full relative">
+                    <div class="food-image-wrapper h-48 w-full relative">
                         <img 
                             src="${item.image}" 
                             alt="${item.name}" 
@@ -169,39 +169,39 @@ function renderMenu() {
                             class="w-full h-full object-cover"
                             onerror="this.src='https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80'"
                         />
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#151e2a] via-transparent to-black/30"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40"></div>
                         
                         <!-- Badges -->
-                        <div class="absolute top-3 left-3 flex flex-wrap gap-1.5 max-w-[80%]">
+                        <div class="absolute top-2.5 left-2.5 flex flex-wrap gap-1 max-w-[80%]">
                             ${item.badge ? `
-                                <span class="px-2.5 py-0.5 text-[11px] rounded-full badge-signature shadow-md">
-                                    <i class="fa-solid fa-crown text-[10px] mr-1"></i>${item.badge}
+                                <span class="px-2 py-0.5 text-[10px] rounded-md badge-signature shadow">
+                                    ${item.badge}
                                 </span>
                             ` : ''}
                         </div>
 
                         <!-- Diet Icon & Rating -->
-                        <div class="absolute top-3 right-3 flex items-center gap-1.5">
-                            <span class="px-2 py-0.5 text-xs rounded-full bg-black/70 backdrop-blur-md text-amber-300 font-semibold flex items-center gap-1 border border-amber-500/30">
-                                <i class="fa-solid fa-star text-amber-400 text-[10px]"></i> ${item.rating}
+                        <div class="absolute top-2.5 right-2.5 flex items-center gap-1">
+                            <span class="px-1.5 py-0.5 text-[11px] rounded bg-black/80 backdrop-blur-md text-white font-bold flex items-center gap-1 border border-white/20">
+                                <i class="fa-solid fa-star text-[9px]"></i> ${item.rating}
                             </span>
                         </div>
 
                         <!-- Arabic Subtitle on Image bottom -->
-                        <div class="absolute bottom-2 right-3 font-arabic text-amber-300/80 text-lg dir-rtl pointer-events-none drop-shadow">
+                        <div class="absolute bottom-2 right-2.5 font-arabic text-white/90 text-sm dir-rtl pointer-events-none drop-shadow">
                             ${item.arabicName}
                         </div>
                     </div>
 
                     <!-- Content -->
-                    <div class="p-5">
+                    <div class="p-4">
                         <div class="flex items-start justify-between gap-2">
-                            <h3 class="font-heading text-lg font-bold text-slate-100 group-hover:text-amber-400 transition-colors">
+                            <h3 class="font-heading text-sm font-bold text-white group-hover:text-zinc-200 transition-colors">
                                 ${item.name}
                             </h3>
                         </div>
 
-                        <p class="text-sm text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+                        <p class="text-xs text-zinc-400 mt-1.5 line-clamp-2 leading-relaxed">
                             ${item.description}
                         </p>
 
@@ -211,11 +211,11 @@ function renderMenu() {
                 </div>
 
                 <!-- Footer & Action Buttons -->
-                <div class="p-5 pt-0 mt-3">
-                    <div class="flex items-center justify-between py-2 border-t border-slate-800">
+                <div class="p-4 pt-0 mt-2">
+                    <div class="flex items-center justify-between py-2 border-t border-neutral-800">
                         <div>
-                            <span class="text-xs text-slate-400 block">Price</span>
-                            <span class="text-2xl font-bold font-heading text-amber-400">
+                            <span class="text-[10px] text-zinc-400 block uppercase tracking-wider">Price</span>
+                            <span class="text-lg font-bold font-heading text-white">
                                 ${state.currency}${currentPortion.price}
                             </span>
                         </div>
@@ -224,25 +224,25 @@ function renderMenu() {
                         <button 
                             type="button"
                             onclick="openDishModal('${item.id}')"
-                            class="text-xs text-slate-400 hover:text-amber-300 transition-colors flex items-center gap-1">
-                            <i class="fa-solid fa-circle-info"></i> Details
+                            class="text-xs text-zinc-400 hover:text-white transition-colors flex items-center gap-1">
+                            <i class="fa-solid fa-circle-info text-[11px]"></i> Details
                         </button>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-2 mt-3">
+                    <div class="grid grid-cols-2 gap-2 mt-2">
                         <!-- Add to Cart (Multi-order) -->
                         <button 
                             type="button"
                             onclick="addToCart('${item.id}')"
-                            class="px-3 py-2.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all border border-slate-700 hover:border-amber-500/50">
-                            <i class="fa-solid fa-cart-plus text-amber-400"></i> Add to Cart
+                            class="px-2.5 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-all border border-neutral-700 hover:border-white/40">
+                            <i class="fa-solid fa-cart-plus text-xs"></i> Add
                         </button>
 
                         <!-- Instant WhatsApp Order (Direct 1-Click) -->
                         <button 
                             type="button"
                             onclick="quickWhatsAppOrder('${item.id}')"
-                            class="px-3 py-2.5 rounded-xl btn-whatsapp text-xs font-bold flex items-center justify-center gap-1.5 shadow-md">
+                            class="px-2.5 py-2 rounded-lg btn-whatsapp text-xs font-bold flex items-center justify-center gap-1.5 shadow">
                             <i class="fa-brands fa-whatsapp text-sm"></i> Order Now
                         </button>
                     </div>
@@ -467,7 +467,7 @@ function updateCartUI() {
     const deliveryFeeEl = document.getElementById("cart-delivery-fee");
     if (deliveryFeeEl) {
         if (deliveryFee === 0) {
-            deliveryFeeEl.innerHTML = `<span class="text-emerald-400 font-bold uppercase">FREE</span>`;
+            deliveryFeeEl.innerHTML = `<span class="text-white font-bold uppercase text-xs">FREE</span>`;
         } else {
             deliveryFeeEl.textContent = `${state.currency}${deliveryFee}`;
         }
@@ -477,7 +477,7 @@ function updateCartUI() {
     if (freeDeliveryNotice) {
         if (subtotal > 0 && subtotal < RESTAURANT_CONFIG.freeDeliveryThreshold && state.orderType === "delivery") {
             const remaining = RESTAURANT_CONFIG.freeDeliveryThreshold - subtotal;
-            freeDeliveryNotice.innerHTML = `Add <span class="font-bold text-amber-400">${state.currency}${remaining}</span> more for <strong>FREE Delivery</strong>!`;
+            freeDeliveryNotice.innerHTML = `Add <span class="font-bold text-white underline">${state.currency}${remaining}</span> more for <strong>FREE Delivery</strong>!`;
             freeDeliveryNotice.classList.remove("hidden");
         } else {
             freeDeliveryNotice.classList.add("hidden");
@@ -494,26 +494,26 @@ function updateCartUI() {
         if (cartItemsList) {
             cartItemsList.classList.remove("hidden");
             cartItemsList.innerHTML = state.cart.map((item, idx) => `
-                <div class="flex items-center gap-3 p-3 bg-slate-900/80 rounded-xl border border-slate-800">
-                    <img src="${item.image}" alt="${item.name}" class="w-14 h-14 rounded-lg object-cover flex-shrink-0 border border-slate-700">
+                <div class="flex items-center gap-3 p-2.5 bg-neutral-900 rounded-xl border border-neutral-800">
+                    <img src="${item.image}" alt="${item.name}" class="w-12 h-12 rounded-lg object-cover flex-shrink-0 border border-neutral-700">
                     
                     <div class="flex-1 min-w-0">
                         <div class="flex items-start justify-between">
-                            <h4 class="text-sm font-semibold text-slate-100 truncate">${item.name}</h4>
-                            <button onclick="removeFromCart(${idx})" class="text-slate-500 hover:text-red-400 text-xs ml-1 transition-colors">
+                            <h4 class="text-xs font-semibold text-white truncate">${item.name}</h4>
+                            <button onclick="removeFromCart(${idx})" class="text-zinc-500 hover:text-white text-xs ml-1 transition-colors">
                                 <i class="fa-solid fa-trash"></i>
                             </button>
                         </div>
-                        <p class="text-[11px] text-amber-400/90 font-medium">${item.portionName}</p>
-                        <div class="flex items-center justify-between mt-2">
-                            <span class="text-sm font-bold text-amber-300">${state.currency}${item.price * item.quantity}</span>
+                        <p class="text-[10px] text-zinc-400 font-medium">${item.portionName}</p>
+                        <div class="flex items-center justify-between mt-1.5">
+                            <span class="text-xs font-bold text-white">${state.currency}${item.price * item.quantity}</span>
                             
-                            <div class="flex items-center gap-2 bg-slate-800 rounded-lg p-0.5 border border-slate-700">
-                                <button onclick="updateCartItemQuantity(${idx}, -1)" class="w-6 h-6 flex items-center justify-center text-slate-300 hover:bg-slate-700 rounded transition-colors text-xs">
+                            <div class="flex items-center gap-1.5 bg-neutral-800 rounded p-0.5 border border-neutral-700">
+                                <button onclick="updateCartItemQuantity(${idx}, -1)" class="w-5 h-5 flex items-center justify-center text-zinc-300 hover:bg-white hover:text-black rounded transition-colors text-[10px]">
                                     <i class="fa-solid fa-minus"></i>
                                 </button>
-                                <span class="text-xs font-bold w-4 text-center text-slate-100">${item.quantity}</span>
-                                <button onclick="updateCartItemQuantity(${idx}, 1)" class="w-6 h-6 flex items-center justify-center text-slate-300 hover:bg-slate-700 rounded transition-colors text-xs">
+                                <span class="text-[11px] font-bold w-4 text-center text-white">${item.quantity}</span>
+                                <button onclick="updateCartItemQuantity(${idx}, 1)" class="w-5 h-5 flex items-center justify-center text-zinc-300 hover:bg-white hover:text-black rounded transition-colors text-[10px]">
                                     <i class="fa-solid fa-plus"></i>
                                 </button>
                             </div>
@@ -715,48 +715,48 @@ function openDishModal(itemId) {
 
     content.innerHTML = `
         <div class="relative">
-            <img src="${item.image}" alt="${item.name}" class="w-full h-72 sm:h-80 object-cover rounded-t-2xl">
-            <button onclick="closeDishModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/70 text-white flex items-center justify-center hover:bg-black transition-colors">
-                <i class="fa-solid fa-xmark"></i>
+            <img src="${item.image}" alt="${item.name}" class="w-full h-64 sm:h-72 object-cover rounded-t-xl">
+            <button onclick="closeDishModal()" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/80 text-white flex items-center justify-center hover:bg-white hover:text-black transition-colors border border-white/20">
+                <i class="fa-solid fa-xmark text-sm"></i>
             </button>
-            <div class="absolute bottom-4 left-4">
-                <span class="px-3 py-1 rounded-full text-xs font-bold badge-signature shadow-lg">
+            <div class="absolute bottom-3 left-3">
+                <span class="px-2.5 py-0.5 rounded text-[11px] font-bold badge-signature shadow">
                     ${item.badge || item.categoryName}
                 </span>
             </div>
-            <div class="absolute bottom-4 right-4 font-arabic text-amber-300 text-2xl drop-shadow">
+            <div class="absolute bottom-3 right-3 font-arabic text-white text-xl drop-shadow">
                 ${item.arabicName}
             </div>
         </div>
         
-        <div class="p-6">
-            <div class="flex items-start justify-between gap-4">
+        <div class="p-5">
+            <div class="flex items-start justify-between gap-3">
                 <div>
-                    <h2 class="text-2xl font-bold font-heading text-slate-100">${item.name}</h2>
-                    <p class="text-xs text-amber-400 font-medium uppercase tracking-wider mt-1">${item.categoryName}</p>
+                    <h2 class="text-xl font-bold font-heading text-white">${item.name}</h2>
+                    <p class="text-[11px] text-zinc-400 font-semibold uppercase tracking-wider mt-0.5">${item.categoryName}</p>
                 </div>
                 <div class="text-right">
-                    <span class="text-2xl font-bold font-heading text-amber-400">${state.currency}${portion.price}</span>
-                    <span class="block text-xs text-slate-400">${portion.name}</span>
+                    <span class="text-xl font-bold font-heading text-white">${state.currency}${portion.price}</span>
+                    <span class="block text-[10px] text-zinc-400">${portion.name}</span>
                 </div>
             </div>
 
-            <div class="mt-4 p-4 rounded-xl bg-slate-900/80 border border-slate-800">
-                <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Authentic Culinary Heritage:</h4>
-                <p class="text-sm text-slate-300 leading-relaxed">${item.longDescription}</p>
+            <div class="mt-3.5 p-3 rounded-lg bg-neutral-900 border border-neutral-800">
+                <h4 class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 mb-1">Culinary Heritage:</h4>
+                <p class="text-xs text-zinc-300 leading-relaxed">${item.longDescription}</p>
             </div>
 
             <!-- Portion Selector -->
             ${item.portions && item.portions.length > 1 ? `
-                <div class="mt-4">
-                    <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 block mb-2">Select Portion / Serving:</label>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                <div class="mt-3.5">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1.5">Select Portion / Serving:</label>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
                         ${item.portions.map((p, idx) => `
                             <button 
                                 onclick="selectPortionFromModal('${item.id}', ${idx})"
-                                class="p-2.5 rounded-xl border text-center transition-all ${idx === selectedPortionIdx ? 'border-amber-400 bg-amber-400/10 text-white font-bold' : 'border-slate-800 bg-slate-900/60 text-slate-300 hover:border-slate-700'}">
-                                <div class="text-xs">${p.name}</div>
-                                <div class="text-sm text-amber-400 font-bold mt-0.5">${state.currency}${p.price}</div>
+                                class="p-2 rounded-lg border text-center transition-all ${idx === selectedPortionIdx ? 'border-white bg-white text-black font-bold' : 'border-neutral-800 bg-neutral-900 text-zinc-300 hover:border-neutral-700'}">
+                                <div class="text-[11px]">${p.name}</div>
+                                <div class="text-xs font-bold mt-0.5 ${idx === selectedPortionIdx ? 'text-black' : 'text-white'}">${state.currency}${p.price}</div>
                             </button>
                         `).join("")}
                     </div>
@@ -764,16 +764,16 @@ function openDishModal(itemId) {
             ` : ''}
 
             <!-- Quick Action Buttons -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-5">
                 <button 
                     onclick="addToCart('${item.id}'); closeDishModal();"
-                    class="py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold flex items-center justify-center gap-2 border border-slate-700">
-                    <i class="fa-solid fa-cart-plus text-amber-400"></i> Add to Order Cart
+                    class="py-2.5 px-3 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold flex items-center justify-center gap-1.5 border border-neutral-700">
+                    <i class="fa-solid fa-cart-plus text-xs"></i> Add to Order Cart
                 </button>
                 <button 
                     onclick="quickWhatsAppOrder('${item.id}'); closeDishModal();"
-                    class="py-3 px-4 rounded-xl btn-whatsapp text-sm font-bold flex items-center justify-center gap-2 shadow-lg">
-                    <i class="fa-brands fa-whatsapp text-lg"></i> Instant WhatsApp Order
+                    class="py-2.5 px-3 rounded-lg btn-whatsapp text-xs font-bold flex items-center justify-center gap-1.5 shadow">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> Order on WhatsApp
                 </button>
             </div>
         </div>
@@ -823,7 +823,7 @@ function saveWhatsAppNumber() {
 
     let cleanNumber = input.value.replace(/\D/g, "");
     if (cleanNumber.length < 8) {
-        alert("Please enter a valid phone number with country code (e.g. 919876543210).");
+        alert("Please enter a valid phone number with country code (e.g. 919885196008).");
         return;
     }
 
@@ -835,29 +835,29 @@ function saveWhatsAppNumber() {
 }
 
 // -----------------------------------------------------------------------------
-// REVIEWS & FAQS RENDERING
+// REVIEWS & FAQS RENDERING - MONOCHROME WHITE & BLACK
 // -----------------------------------------------------------------------------
 function renderReviews() {
     const container = document.getElementById("reviews-container");
     if (!container) return;
 
     container.innerHTML = RESTAURANT_REVIEWS.map(rev => `
-        <div class="p-6 rounded-2xl bg-gradient-to-b from-slate-900/90 to-slate-900/50 border border-slate-800 hover:border-amber-500/30 transition-all flex flex-col justify-between">
+        <div class="p-5 rounded-xl bg-neutral-900/90 border border-neutral-800 hover:border-white/30 transition-all flex flex-col justify-between">
             <div>
-                <div class="flex items-center gap-1 text-amber-400 text-sm mb-3">
+                <div class="flex items-center gap-1 text-white text-xs mb-2.5">
                     ${Array(rev.rating).fill('<i class="fa-solid fa-star"></i>').join("")}
                 </div>
-                <p class="text-slate-300 text-sm italic leading-relaxed">"${rev.review}"</p>
-                <div class="mt-3 inline-block px-2.5 py-1 rounded-md bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs">
+                <p class="text-zinc-300 text-xs italic leading-relaxed">"${rev.review}"</p>
+                <div class="mt-2.5 inline-block px-2 py-0.5 rounded bg-white/10 border border-white/20 text-white text-[10px] font-semibold">
                     Ordered: ${rev.dish}
                 </div>
             </div>
             
-            <div class="flex items-center gap-3 mt-6 pt-4 border-t border-slate-800">
-                <img src="${rev.avatar}" alt="${rev.name}" class="w-10 h-10 rounded-full object-cover border border-amber-500/40">
+            <div class="flex items-center gap-2.5 mt-4 pt-3 border-t border-neutral-800">
+                <img src="${rev.avatar}" alt="${rev.name}" class="w-8 h-8 rounded-full object-cover border border-white/30">
                 <div>
-                    <h4 class="text-sm font-semibold text-slate-100">${rev.name}</h4>
-                    <span class="text-xs text-slate-400">${rev.date} • Verified Guest</span>
+                    <h4 class="text-xs font-semibold text-white">${rev.name}</h4>
+                    <span class="text-[10px] text-zinc-400">${rev.date} • Verified Guest</span>
                 </div>
             </div>
         </div>
@@ -867,6 +867,26 @@ function renderReviews() {
 function renderFaqs() {
     const container = document.getElementById("faqs-container");
     if (!container) return;
+
+    container.innerHTML = RESTAURANT_FAQS.map((faq, idx) => `
+        <details class="group p-4 rounded-xl bg-neutral-900 border border-neutral-800 transition-all duration-200 open:border-white/40 open:bg-neutral-900/90">
+            <summary class="flex justify-between items-center cursor-pointer list-none text-white font-semibold text-xs select-none">
+                <span class="flex items-center gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-white text-black flex items-center justify-center text-[10px] font-bold font-heading">
+                        0${idx + 1}
+                    </span>
+                    ${faq.q}
+                </span>
+                <span class="transition-transform group-open:rotate-180 text-white ml-3">
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                </span>
+            </summary>
+            <p class="mt-3 text-zinc-300 text-xs leading-relaxed pl-7">
+                ${faq.a}
+            </p>
+        </details>
+    `).join("");
+}
 
     container.innerHTML = RESTAURANT_FAQS.map((faq, idx) => `
         <details class="group p-5 rounded-2xl bg-slate-900/70 border border-slate-800/80 transition-all duration-300 open:border-amber-500/30 open:bg-slate-900">
